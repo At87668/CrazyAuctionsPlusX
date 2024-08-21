@@ -48,7 +48,15 @@ import studio.trc.bukkit.crazyauctionsplus.util.FileManager.*;
 public class PluginControl
 {
     public static Map<CommandSender, Boolean> stackTraceVisible = new HashMap();
-    public static String nmsVersion = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
+    public static String nmsVersion;
+    static {
+        String[] packageParts = Bukkit.getServer().getClass().getPackage().getName().split("\\.");
+        if (packageParts.length > 3) {
+            nmsVersion = packageParts[3];
+        } else {
+            nmsVersion = "unknown";
+        }
+}
     private static final Pattern hexColorPattern = Pattern.compile("#[a-fA-F0-9]{6}");
     
     public static String color(String text) {
