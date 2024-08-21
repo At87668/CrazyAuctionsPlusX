@@ -1,11 +1,12 @@
 name: CrazyAuctionsPlus
 authors:
+- Author87668
 - BadBones69
 - TRCStudioDean
 main: studio.trc.bukkit.crazyauctionsplus.Main
 version: ${version}
-api-version: 1.13
-description: Plus version of CrazyAuctions plugin, by TRCStudioDean (TRC Studio & PA Project), The original author was BadBones69.
+api-version: 1.20
+description: restart version of CrazyAuctionsPlus plugin.
 depend:
   - Vault
 softdepend:
@@ -13,4 +14,4 @@ softdepend:
 commands:
     ca:
         description: Crazy Auctions Plus Main command.
-        aliases: [cap, crazyauction, crazyauctions, crazyauctionsplus]
+        aliases: [cap, crazyauction, crazyauctions, crazyauctionsplus, crazyauctionsplusx]
