@@ -1,6 +1,4 @@
-# CrazyAuctionsPlusX
-
-## 📖 Preface
+## CrazyAuctionsPlusX
 This is an restart version of the [CrazyAuctionsPlus](https://www.spigotmc.org/resources/75655/) plugin.
 
 Support the latest Minecraft version.
@@ -35,7 +33,7 @@ Support the latest Minecraft version.
 
 ---
 
-## 🎮 Commands
+### 🎮 Commands
 > 💡 *Press `Tab` for command auto-completion*
 
 ### 🔑 Main Commands
@@ -84,7 +82,7 @@ Support the latest Minecraft version.
 
 ---
 
-## 🔄 Migration Guide: CrazyAuctions → CrazyAuctionsPlusX
+### 🔄 Migration Guide: CrazyAuctions → CrazyAuctionsPlusX
 1. Download `CrazyAuctionsPlusX.jar` and [`Vault.jar`](https://www.spigotmc.org/resources/34315/)
 2. Place both `.jar` files into your server's `plugins/` folder
 3. Start server and wait for `CrazyAuctionsPlusX/` folder generation
