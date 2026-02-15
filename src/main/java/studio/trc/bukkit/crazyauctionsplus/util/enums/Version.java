@@ -34,8 +34,33 @@ public enum Version {
      */
     public static Version getCurrentVersion() {
         if (currentVersion == null) {
-            String ver = Bukkit.getServer().getClass().getPackage().getName();
-            int v = Integer.parseInt(ver.substring(ver.lastIndexOf('.') + 1).replace("_", "").replace("R", "").replace("v", ""));
+            String pkg = Bukkit.getServer().getClass().getPackage().getName();
+            String[] parts = pkg.split("\\.");
+            String verPart = null;
+            for (String p : parts) {
+                if (p != null && p.startsWith("v") && p.matches("v\\d+_.*")) {
+                    verPart = p;
+                    break;
+                }
+            }
+            if (verPart == null) {
+                for (String p : parts) {
+                    if (p != null && p.startsWith("v")) {
+                        verPart = p;
+                        break;
+                    }
+                }
+            }
+            if (verPart == null) {
+                verPart = pkg.substring(pkg.lastIndexOf('.') + 1);
+            }
+            int v;
+            try {
+                v = Integer.parseInt(verPart.replace("_", "").replace("R", "").replace("v", ""));
+            } catch (NumberFormatException ex) {
+                currentVersion = Version.TOO_NEW;
+                return currentVersion;
+            }
             for (Version version : values()) {
                 if (version.getVersionInteger() == v) {
                     currentVersion = version;

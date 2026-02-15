@@ -20,7 +20,30 @@ import studio.trc.bukkit.crazyauctionsplus.util.PluginControl;
 public class ShopSign
     implements Listener
 {
-    private static final String version = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
+    private static final String version;
+    static {
+        String pkg = Bukkit.getServer().getClass().getPackage().getName();
+        String[] parts = pkg.split("\\.");
+        String found = null;
+        for (String p : parts) {
+            if (p != null && p.startsWith("v") && p.contains("_")) {
+                found = p;
+                break;
+            }
+        }
+        if (found == null) {
+            for (String p : parts) {
+                if (p != null && p.startsWith("v")) {
+                    found = p;
+                    break;
+                }
+            }
+        }
+        if (found == null && parts.length > 0) {
+            found = parts[parts.length - 1];
+        }
+        version = (found == null) ? "unknown" : found;
+    }
     
     @EventHandler(priority = EventPriority.LOWEST)
     public void click(PlayerInteractEvent e) {

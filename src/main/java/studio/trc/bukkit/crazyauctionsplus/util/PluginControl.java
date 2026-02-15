@@ -50,13 +50,23 @@ public class PluginControl
     public static Map<CommandSender, Boolean> stackTraceVisible = new HashMap();
     public static String nmsVersion;
     static {
-        String[] packageParts = Bukkit.getServer().getClass().getPackage().getName().split("\\.");
-        if (packageParts.length > 3) {
-            nmsVersion = packageParts[3];
-        } else {
-            nmsVersion = "unknown";
+        String pkg = Bukkit.getServer().getClass().getPackage().getName();
+        String[] packageParts = pkg.split("\\.");
+        String found = null;
+        for (String part : packageParts) {
+            if (part != null && part.startsWith("v") && part.contains("_")) {
+                found = part;
+                break;
+            }
         }
-}
+        if (found == null && packageParts.length > 0) {
+            String last = packageParts[packageParts.length - 1];
+            if (last != null && last.startsWith("v") && last.contains("_")) {
+                found = last;
+            }
+        }
+        nmsVersion = (found == null) ? "unknown" : found;
+    }
     private static final Pattern hexColorPattern = Pattern.compile("#[a-fA-F0-9]{6}");
     
     public static String color(String text) {
@@ -854,7 +864,7 @@ public class PluginControl
             return backupFiles;
         }
         List<String> list = new ArrayList();
-        File folder = new File("plugins/CrazyAuctionsPlus/Backup/");
+        File folder = new File("plugins/CrazyAuctionsPlusX/Backup/");
         if (!folder.exists()) return list;
         File[] files = folder.listFiles();
         for (File f : files) {
@@ -1102,7 +1112,7 @@ public class PluginControl
         public static void backup() throws SQLException, IOException {
             String fileName = MessageUtil.getValue("Admin-Command.Backup.Backup-Name").replace("%date%", new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date())) + ".db";
             GlobalMarket market = GlobalMarket.getMarket();
-            File folder = new File("plugins/CrazyAuctionsPlus/Backup");
+            File folder = new File("plugins/CrazyAuctionsPlusX/Backup");
             if (!folder.exists()) folder.mkdir();
             File file = new File(folder, fileName);
             if (!file.exists()) {
@@ -1111,7 +1121,7 @@ public class PluginControl
                 file.delete();
                 file.createNewFile();
             }
-            try (Connection DBFile = DriverManager.getConnection("jdbc:sqlite:plugins/CrazyAuctionsPlus/Backup/" + fileName)) {
+            try (Connection DBFile = DriverManager.getConnection("jdbc:sqlite:plugins/CrazyAuctionsPlusX/Backup/" + fileName)) {
                 DBFile.prepareStatement("CREATE TABLE IF NOT EXISTS ItemMail" +
                     "("
                     + "UUID VARCHAR(36) NOT NULL PRIMARY KEY,"
@@ -1136,7 +1146,7 @@ public class PluginControl
                             break;
                         }
                         case YAML: {
-                            File playerFolder = new File("plugins/CrazyAuctionsPlus/Players/");
+                            File playerFolder = new File("plugins/CrazyAuctionsPlusX/Players/");
                             if (playerFolder.exists()) {
                                 File[] files = playerFolder.listFiles();
                                 for (File f : files) {
@@ -1159,7 +1169,7 @@ public class PluginControl
                             break;
                         }
                         default: {
-                            File playerFolder = new File("plugins/CrazyAuctionsPlus/Players/");
+                            File playerFolder = new File("plugins/CrazyAuctionsPlusX/Players/");
                             if (playerFolder.exists()) {
                                 File[] files = playerFolder.listFiles();
                                 for (File f : files) {
@@ -1187,7 +1197,7 @@ public class PluginControl
                 } else if (PluginControl.useSQLiteStorage()) {
                     SQLiteEngine.backupPlayerData(DBFile);
                 } else {
-                    File playerFolder = new File("plugins/CrazyAuctionsPlus/Players/");
+                    File playerFolder = new File("plugins/CrazyAuctionsPlusX/Players/");
                     if (playerFolder.exists()) {
                         File[] files = playerFolder.listFiles();
                         for (File f : files) {
@@ -1225,7 +1235,7 @@ public class PluginControl
                     backup();
                 }
                 if (rollBackFile.exists()) {
-                    try (Connection sqlConnection = DriverManager.getConnection("jdbc:sqlite:plugins/CrazyAuctionsPlus/Backup/" + rollBackFile.getName())) {
+                    try (Connection sqlConnection = DriverManager.getConnection("jdbc:sqlite:plugins/CrazyAuctionsPlusX/Backup/" + rollBackFile.getName())) {
                         
                         // Roll Back Market Database.
                         ResultSet marketRS = sqlConnection.prepareStatement("SELECT YamlMarket FROM Market").executeQuery();
@@ -1252,7 +1262,7 @@ public class PluginControl
                                     }
                                     case YAML: {
                                         String yamlData = marketRS.getString("YamlMarket");
-                                        File databaseFile = new File("plugins/CrazyAuctionsPlus/Database.yml");
+                                        File databaseFile = new File("plugins/CrazyAuctionsPlusX/Database.yml");
                                         if (!databaseFile.exists()) {
                                             databaseFile.createNewFile();
                                         }
@@ -1264,7 +1274,7 @@ public class PluginControl
                                     }
                                     default: {
                                         String yamlData = marketRS.getString("YamlMarket");
-                                        File databaseFile = new File("plugins/CrazyAuctionsPlus/Database.yml");
+                                        File databaseFile = new File("plugins/CrazyAuctionsPlusX/Database.yml");
                                         if (!databaseFile.exists()) {
                                             databaseFile.createNewFile();
                                         }
@@ -1291,7 +1301,7 @@ public class PluginControl
                                 GlobalMarket.getMarket().reloadData();
                             } else {
                                 String yamlData = marketRS.getString("YamlMarket");
-                                File databaseFile = new File("plugins/CrazyAuctionsPlus/Database.yml");
+                                File databaseFile = new File("plugins/CrazyAuctionsPlusX/Database.yml");
                                 if (!databaseFile.exists()) {
                                     databaseFile.createNewFile();
                                 }
@@ -1339,7 +1349,7 @@ public class PluginControl
                                     break;
                                 }
                                 case YAML: {
-                                    File path = new File("plugins/CrazyAuctionsPlus/Players/");
+                                    File path = new File("plugins/CrazyAuctionsPlusX/Players/");
                                     if (!path.exists()) {
                                         path.mkdir();
                                     }
@@ -1360,7 +1370,7 @@ public class PluginControl
                                     break;
                                 }
                                 default: {
-                                    File path = new File("plugins/CrazyAuctionsPlus/Players/");
+                                    File path = new File("plugins/CrazyAuctionsPlusX/Players/");
                                     if (!path.exists()) {
                                         path.mkdir();
                                     }
@@ -1410,7 +1420,7 @@ public class PluginControl
                             }
                             SQLiteStorage.cache.clear();
                         } else {
-                            File path = new File("plugins/CrazyAuctionsPlus/Players/");
+                            File path = new File("plugins/CrazyAuctionsPlusX/Players/");
                             if (!path.exists()) {
                                 path.mkdir();
                             }

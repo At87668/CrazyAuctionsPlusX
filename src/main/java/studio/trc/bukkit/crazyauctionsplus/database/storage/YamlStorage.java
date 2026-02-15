@@ -35,12 +35,12 @@ public class YamlStorage
     public YamlStorage(Player player) {
         uuid = player.getUniqueId();
         
-        File dataFolder = new File("plugins/CrazyAuctionsPlus/Players");
+        File dataFolder = new File("plugins/CrazyAuctionsPlusX/Players");
         if (!dataFolder.exists()) {
             dataFolder.mkdir();
         }
         
-        File dataFile = new File("plugins/CrazyAuctionsPlus/Players/" + player.getUniqueId().toString() + ".yml");
+        File dataFile = new File("plugins/CrazyAuctionsPlusX/Players/" + player.getUniqueId().toString() + ".yml");
         if (!dataFile.exists()) {
             try {
                 dataFile.createNewFile();
@@ -61,12 +61,12 @@ public class YamlStorage
     public YamlStorage(UUID uuid) {
         this.uuid = uuid;
         
-        File dataFolder = new File("plugins/CrazyAuctionsPlus/Players");
+        File dataFolder = new File("plugins/CrazyAuctionsPlusX/Players");
         if (!dataFolder.exists()) {
             dataFolder.mkdir();
         }
         
-        File dataFile = new File("plugins/CrazyAuctionsPlus/Players/" + uuid.toString() + ".yml");
+        File dataFile = new File("plugins/CrazyAuctionsPlusX/Players/" + uuid.toString() + ".yml");
         if (!dataFile.exists()) {
             try {
                 dataFile.createNewFile();
@@ -114,12 +114,12 @@ public class YamlStorage
     }
     
     private void dataFileRepair() {
-        File dataFolder = new File("plugins/CrazyAuctionsPlus/Broken-Players");
+        File dataFolder = new File("plugins/CrazyAuctionsPlusX/Broken-Players");
         if (!dataFolder.exists()) {
             dataFolder.mkdir();
         }
-        File dataFile = new File("plugins/CrazyAuctionsPlus/Players/" + uuid.toString() + ".yml");
-        dataFile.renameTo(new File("plugins/CrazyAuctionsPlus/Broken-Players/" + uuid.toString() + ".yml"));
+        File dataFile = new File("plugins/CrazyAuctionsPlusX/Players/" + uuid.toString() + ".yml");
+        dataFile.renameTo(new File("plugins/CrazyAuctionsPlusX/Broken-Players/" + uuid.toString() + ".yml"));
         try {
             dataFile.createNewFile();
         } catch (IOException ex) {
@@ -230,7 +230,7 @@ public class YamlStorage
             i++;
         }
         try {
-            config.save("plugins/CrazyAuctionsPlus/Players/" + uuid + ".yml");
+            config.save("plugins/CrazyAuctionsPlusX/Players/" + uuid + ".yml");
         } catch (IOException ex) {
             PluginControl.printStackTrace(ex);
         }

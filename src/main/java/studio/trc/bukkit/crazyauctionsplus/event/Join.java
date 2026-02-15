@@ -50,7 +50,7 @@ public class Join
         PluginControl.checkUpdate();
         if (Updater.isFoundANewVersion()) {
             if (PluginControl.hasPermission(player, "Permissions.Updater", false)) {
-                String nowVersion = Bukkit.getPluginManager().getPlugin("CrazyAuctionsPlus").getDescription().getVersion();
+                String nowVersion = Bukkit.getPluginManager().getPlugin("CrazyAuctionsPlusX").getDescription().getVersion();
                 Map<String, String> placeholders = new HashMap();
                     placeholders.put("%nowVersion%", nowVersion);
                     placeholders.put("%version%", Updater.getNewVersion());

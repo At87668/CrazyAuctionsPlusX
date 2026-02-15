@@ -210,7 +210,7 @@ public class YamlMarket
     @Override
     public YamlConfiguration getYamlData() {
         YamlConfiguration config = new YamlConfiguration();
-        try (Reader reader = new InputStreamReader(new FileInputStream(new File("plugins/CrazyAuctionsPlus/Database.yml")), "UTF-8")) {
+        try (Reader reader = new InputStreamReader(new FileInputStream(new File("plugins/CrazyAuctionsPlusX/Database.yml")), "UTF-8")) {
             config.load(reader);
         } catch (IOException | InvalidConfigurationException ex) {
             PluginControl.printStackTrace(ex);

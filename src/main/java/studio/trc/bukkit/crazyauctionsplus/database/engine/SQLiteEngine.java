@@ -20,7 +20,7 @@ public class SQLiteEngine
     private static final SQLiteEngine instance = new SQLiteEngine();
     
     private static volatile Connection connection = null;
-    private static String filePath = "plugins/CrazyAuctionsPlus/";
+    private static String filePath = "plugins/CrazyAuctionsPlusX/";
     private static String fileName = "Database.db";
     private static String marketTable = "market";
     private static String itemMailTable = "itemMail";

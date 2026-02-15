@@ -49,7 +49,7 @@ public class FileManager {
     private static boolean rollingback = false;
     private static boolean syncing = false;
     private Main main;
-    private String prefix = "[CrazyAuctionsPlus] ";
+    private String prefix = "[CrazyAuctionsPlusX] ";
     private Boolean log = false;
     private final HashMap<Files, File> files = new HashMap();
     private final ArrayList<String> homeFolders = new ArrayList();
@@ -67,8 +67,8 @@ public class FileManager {
         syncing = true;
         
         // Old Data Files
-        File database_File = new File("plugins/CrazyAuctionsPlus/Database.yml");
-        File data_File = new File("plugins/CrazyAuctionsPlus/Data.yml");
+        File database_File = new File("plugins/CrazyAuctionsPlusX/Database.yml");
+        File data_File = new File("plugins/CrazyAuctionsPlusX/Data.yml");
         File data_File_On_CrazyAuctions = new File("plugins/CrazyAuctions/Data.yml");
         File[] files = {database_File, data_File, data_File_On_CrazyAuctions};
         
@@ -189,7 +189,7 @@ public class FileManager {
             backingup = true;
             String fileName = MessageUtil.getValue("Admin-Command.Backup.Backup-Name").replace("%date%", new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date())) + ".db";
             GlobalMarket market = GlobalMarket.getMarket();
-            File folder = new File("plugins/CrazyAuctionsPlus/Backup");
+            File folder = new File("plugins/CrazyAuctionsPlusX/Backup");
             if (!folder.exists()) folder.mkdir();
             File file = new File(folder, fileName);
             if (!file.exists()) {
@@ -198,7 +198,7 @@ public class FileManager {
                 file.delete();
                 file.createNewFile();
             }
-            try (Connection DBFile = DriverManager.getConnection("jdbc:sqlite:plugins/CrazyAuctionsPlus/Backup/" + fileName)) {
+            try (Connection DBFile = DriverManager.getConnection("jdbc:sqlite:plugins/CrazyAuctionsPlusX/Backup/" + fileName)) {
                 DBFile.prepareStatement("CREATE TABLE IF NOT EXISTS ItemMail" +
                     "("
                     + "UUID VARCHAR(36) NOT NULL PRIMARY KEY,"
@@ -223,7 +223,7 @@ public class FileManager {
                             break;
                         }
                         case YAML: {
-                            File playerFolder = new File("plugins/CrazyAuctionsPlus/Players/");
+                            File playerFolder = new File("plugins/CrazyAuctionsPlusX/Players/");
                             if (playerFolder.exists()) {
                                 File[] files = playerFolder.listFiles();
                                 for (File f : files) {
@@ -246,7 +246,7 @@ public class FileManager {
                             break;
                         }
                         default: {
-                            File playerFolder = new File("plugins/CrazyAuctionsPlus/Players/");
+                            File playerFolder = new File("plugins/CrazyAuctionsPlusX/Players/");
                             if (playerFolder.exists()) {
                                 File[] files = playerFolder.listFiles();
                                 for (File f : files) {
@@ -274,7 +274,7 @@ public class FileManager {
                 } else if (PluginControl.useSQLiteStorage()) {
                     SQLiteEngine.backupPlayerData(DBFile);
                 } else {
-                    File playerFolder = new File("plugins/CrazyAuctionsPlus/Players/");
+                    File playerFolder = new File("plugins/CrazyAuctionsPlusX/Players/");
                     if (playerFolder.exists()) {
                         File[] files = playerFolder.listFiles();
                         for (File f : files) {
@@ -576,8 +576,36 @@ public class FileManager {
         }
         files.clear();
         customFiles.clear();
+        // Ensure CONFIG is loaded first so config-dependent checks won't NPE.
+        Files cfgFile = Files.CONFIG;
+        saveResource(cfgFile);
+        File cfgNewFile = new File(main.getDataFolder(), cfgFile.getFileLocation());
+        try (Reader Config = new InputStreamReader(new FileInputStream(cfgNewFile), "UTF-8")) {
+            FileConfiguration config = new YamlConfiguration();
+            config.load(Config);
+            configurations.put(cfgFile, config);
+            if (Main.language.get("ConfigurationFileLoadedSuccessfully") != null) Main.getInstance().getServer().getConsoleSender().sendMessage(Main.language.getProperty("ConfigurationFileLoadedSuccessfully").replace("{file}", cfgNewFile.getName()).replace("{prefix}", prefix).replace("&", "§"));
+        } catch (IOException | InvalidConfigurationException ex) {
+            if (Main.language.get("ConfigurationFileLoadingError") != null) Main.getInstance().getServer().getConsoleSender().sendMessage(Main.language.getProperty("ConfigurationFileLoadingError").replace("{file}", cfgNewFile.getName()).replace("{prefix}", prefix).replace("&", "§"));
+            File oldFile = new File(main.getDataFolder(), cfgNewFile.getName() + ".old");
+            if (oldFile.exists()) {
+                oldFile.delete();
+            }
+            cfgNewFile.renameTo(oldFile);
+            saveResource(cfgFile);
+            PluginControl.printStackTrace(ex);
+            try (Reader newConfig = new InputStreamReader(new FileInputStream(cfgNewFile))) {
+                FileConfiguration config = new YamlConfiguration();
+                config.load(newConfig);
+                configurations.put(cfgFile, config);
+            } catch (IOException | InvalidConfigurationException ex1) {
+                PluginControl.printStackTrace(ex1);
+            }
+            if (Main.language.get("ConfigurationFileRepair") != null) Main.getInstance().getServer().getConsoleSender().sendMessage(Main.language.getProperty("ConfigurationFileRepair").replace("{prefix}", prefix).replace("&", "§"));
+        }
         //Loads all the normal static files.
         for (Files file : Files.values()) {
+            if (file.equals(Files.CONFIG)) continue; // already loaded
             if (file.equals(Files.DATABASE)) {
                 if (PluginControl.useMySQLStorage()) {
                     if (PluginControl.useSplitDatabase()) {
@@ -902,7 +930,11 @@ public class FileManager {
         
         private ProtectedConfiguration(Files file) {
             this.file = file;
-            config = getInstance().getFile(file);
+            FileConfiguration cfg = getInstance().getFile(file);
+            if (cfg == null) {
+                cfg = new YamlConfiguration();
+            }
+            config = cfg;
         }
         
         public Object get(String path) {

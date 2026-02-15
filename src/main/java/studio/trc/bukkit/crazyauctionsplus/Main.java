@@ -67,7 +67,7 @@ public class Main
         }
         if (language.get("LanguageLoaded") != null) getServer().getConsoleSender().sendMessage(language.getProperty("LanguageLoaded").replace("&", "§"));
         
-        if (!getDescription().getName().equals("CrazyAuctionsPlus")) {
+        if (!getDescription().getName().equals("CrazyAuctionsPlusX")) {
             if (language.get("PluginNameChange") != null) getServer().getConsoleSender().sendMessage(language.getProperty("PluginNameChange").replace("&", "§"));
             Bukkit.getPluginManager().disablePlugin(this);
             return;
