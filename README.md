@@ -1,4 +1,4 @@
-# CrazyAuctionsPlusX Plugin Documentation
+# CrazyAuctionsPlusX
 
 ## 📖 Preface
 This is an restart version of the [CrazyAuctionsPlus](https://www.spigotmc.org/resources/75655/) plugin.
@@ -6,7 +6,7 @@ This is an restart version of the [CrazyAuctionsPlus](https://www.spigotmc.org/r
 Based on the original CrazyAuctionsPlus plugin, I hasn't add some variety of new features.
 
 **Required Dependency:**  
-[Vault](https://www.spigotmc.org/resources/34315/)
+- [Vault](https://www.spigotmc.org/resources/34315/)
 
 ---
 
