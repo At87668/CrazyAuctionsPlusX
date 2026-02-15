@@ -33,7 +33,6 @@ Support the latest Minecraft version.
 
 ---
 
-### 🎮 Commands
 > 💡 *Press `Tab` for command auto-completion*
 
 ### 🔑 Main Commands
