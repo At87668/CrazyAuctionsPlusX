@@ -236,10 +236,34 @@ public class PluginControl
     }
     
     public static Integer getVersion() {
-        String ver = Bukkit.getServer().getClass().getPackage().getName();
-        ver = ver.substring(ver.lastIndexOf('.') + 1);
-        ver = ver.replace("_", "").replace("R", "").replace("v", "");
-        return Integer.parseInt(ver);
+        try {
+            return Version.getCurrentVersion().getVersionInteger();
+        } catch (Throwable t) {
+            String ver = Bukkit.getServer().getClass().getPackage().getName();
+            String[] parts = ver.split("\\.");
+            String found = null;
+            for (String p : parts) {
+                if (p != null && p.startsWith("v") && p.contains("_")) {
+                    found = p;
+                    break;
+                }
+            }
+            if (found == null) {
+                for (String p : parts) {
+                    if (p != null && p.startsWith("v")) {
+                        found = p;
+                        break;
+                    }
+                }
+            }
+            if (found == null) return -1;
+            found = found.replace("_", "").replace("R", "").replace("v", "");
+            try {
+                return Integer.parseInt(found);
+            } catch (NumberFormatException ex) {
+                return -1;
+            }
+        }
     }
     
     @Deprecated
