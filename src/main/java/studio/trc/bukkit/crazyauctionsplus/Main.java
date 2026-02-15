@@ -88,7 +88,7 @@ public class Main
         pm.registerEvents(new AuctionEvents(), this);
         registerCommandExecutor();
         startCheck();
-        metrics = new Metrics(this, 12254);
+        metrics = new Metrics(this, 29538);
         if (language.get("PluginEnabledSuccessfully") != null) getServer().getConsoleSender().sendMessage(language.getProperty("PluginEnabledSuccessfully").replace("{time}", String.valueOf(System.currentTimeMillis() - time)).replace("{prefix}", PluginControl.getPrefix()).replace("&", "§"));
         new BukkitRunnable() {
             @Override
