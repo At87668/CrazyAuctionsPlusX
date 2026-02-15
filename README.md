@@ -70,14 +70,21 @@ Support the latest Minecraft version.
 | `/ca admin itemcolletion give [DisplayName/UID] [Player]` | Give collection item to player |
 
 ### 🌐 Market Commands (Admin)
-`/ca admin market clear` • `/ca admin market confirm` • `/ca admin market list [Page]`  
-`/ca admin market delete [UID]` • `/ca admin market repricing [UID] [Money]`  
-`/ca admin market download` *(DB mode)* • `/ca admin market upload` *(DB mode)*
+- `/ca admin market clear`
+- `/ca admin market confirm`
+- `/ca admin market list [Page]`  
+- `/ca admin market delete [UID]`
+- `/ca admin market repricing [UID] [Money]`  
+- `/ca admin market download` *(DB mode)* 
+- `/ca admin market upload` *(DB mode)*
 
 ### 👤 Player Commands (Admin)
-`/ca admin player confirm` • `/ca admin player [name] clear [market/mail]`  
-`/ca admin player [name] list [Page]` • `/ca admin player [name] delete [UID]`  
-`/ca admin player [name] view` • `/ca admin player [name] download/upload` *(DB mode)*
+- `/ca admin player confirm`
+- `/ca admin player [name] clear [market/mail]`  
+- `/ca admin player [name] list [Page]`
+- `/ca admin player [name] delete [UID]`  
+- `/ca admin player [name] view`
+- `/ca admin player [name] download/upload` *(DB mode)*
 
 ---
 
