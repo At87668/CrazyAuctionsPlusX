@@ -3,7 +3,7 @@
 ## 📖 Preface
 This is an restart version of the [CrazyAuctionsPlus](https://www.spigotmc.org/resources/75655/) plugin.
 
-Based on the original CrazyAuctionsPlus plugin, I hasn't add some variety of new features.
+Support the latest Minecraft version.
 
 **Required Dependency:**  
 - [Vault](https://www.spigotmc.org/resources/34315/)
@@ -84,11 +84,11 @@ Based on the original CrazyAuctionsPlus plugin, I hasn't add some variety of new
 
 ---
 
-## 🔄 Migration Guide: CrazyAuctions → CrazyAuctionsPlus
+## 🔄 Migration Guide: CrazyAuctions → CrazyAuctionsPlusX
 1. Download `CrazyAuctionsPlusX.jar` and [`Vault.jar`](https://www.spigotmc.org/resources/34315/)
 2. Place both `.jar` files into your server's `plugins/` folder
-3. Start server and wait for `CrazyAuctionsPlus/` folder generation
-4. Copy `Data.yml` from original CrazyAuctions folder into `CrazyAuctionsPlus/`
+3. Start server and wait for `CrazyAuctionsPlusX/` folder generation
+4. Copy `Data.yml` from original CrazyAuctions folder into `CrazyAuctionsPlusX/`
 5. Run command: `/ca admin synchronize` *(may take seconds to minutes)*
 6. ✅ Migration complete! All legacy data synced successfully.
 
