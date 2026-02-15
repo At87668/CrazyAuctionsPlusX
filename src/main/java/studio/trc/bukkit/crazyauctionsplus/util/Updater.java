@@ -33,7 +33,7 @@ public class Updater
         checkUpdateThread = new Thread(() -> {
             try {
                 String language = FileManager.Files.CONFIG.getFile().getString("Settings.Language");
-                URL url = new URL("https://api.trc.studio/resources/spigot/crazyauctionsplus/update.yml");
+                URL url = new URL("https://at87668.github.io/CrazyAuctionsPlusX/updates/update.yml");
                 try (Reader reader = new InputStreamReader(url.openStream(), "UTF-8")) {
                     YamlConfiguration yaml = new YamlConfiguration();
                     yaml.load(reader);
