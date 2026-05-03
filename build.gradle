@@ -3,7 +3,7 @@ plugins {
 }
 
 group = 'studio.trc'
-version = '1.4.0.0'
+version = '1.4.1.0'
 
 repositories {
     mavenCentral()

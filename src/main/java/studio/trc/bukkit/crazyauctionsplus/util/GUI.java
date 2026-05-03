@@ -617,7 +617,13 @@ public class GUI
             return;
         }
         Inventory inv = Bukkit.createInventory(null, 27, PluginControl.color(config.getString("Settings.Bidding-On-Item")));
-        if (!bidding.containsKey(player.getUniqueId())) bidding.put(player.getUniqueId(), 0);
+        // 初始化为当前拍卖物品的最高价，这样加价按钮会在该基础上累加
+        MarketGoods mg_init = market.getMarketGoods(uid);
+        int initialBid = 0;
+        if (mg_init != null) {
+            initialBid = (int) Math.ceil(mg_init.getPrice());
+        }
+        bidding.put(player.getUniqueId(), initialBid);
         config.getConfig().getConfigurationSection("Settings.GUISettings.Auction-Settings.Bidding-Buttons").getKeys(false).stream().forEach(price -> {
             inv.setItem(config.getConfig().getInt("Settings.GUISettings.Auction-Settings.Bidding-Buttons." + price + ".Slot"), PluginControl.makeItem(config.getConfig().getString("Settings.GUISettings.Auction-Settings.Bidding-Buttons." + price + ".Item"), 1, config.getConfig().getString("Settings.GUISettings.Auction-Settings.Bidding-Buttons." + price + ".Name")));
         });
